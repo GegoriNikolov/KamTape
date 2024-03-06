@@ -1,0 +1,68 @@
+/* Honors: Most Viewed (Today) */
+    $most_viewed_t = $conn->query(
+    "SELECT * FROM views
+    LEFT JOIN videos ON videos.vid = views.vid
+    WHERE (videos.converted = 1 AND videos.privacy = 1) AND videos.uploaded > DATE_SUB(NOW(), INTERVAL 1 DAY) GROUP BY views.vid
+    ORDER BY COUNT(views.view_id) DESC LIMIT 35"
+    );
+
+    if ($most_viewed_t) {
+    $most_viewed_t = $most_viewed_t->fetchAll(PDO::FETCH_ASSOC);
+    $honor_find = array_search($video['vid'], array_column($most_viewed_t, 'vid'));
+    unset($most_viewed_t);
+    if ($honor_find !== false) {
+        $where_it_is = $honor_find + 1;
+        $video_honors[] = ["honor" => "#" . $where_it_is . " - Most Viewed (Today)", "url" => "s=mp&t=t&page=1"];
+        }
+    }
+    /* Honors: Most Viewed (This Week) */
+    $most_viewed_w = $conn->query(
+    "SELECT * FROM views
+    LEFT JOIN videos ON videos.vid = views.vid
+    WHERE (videos.converted = 1 AND videos.privacy = 1) AND videos.uploaded > DATE_SUB(NOW(), INTERVAL 1 WEEK) GROUP BY views.vid
+    ORDER BY COUNT(views.view_id) DESC LIMIT 35"
+    );
+
+    if ($most_viewed_w) {
+    $most_viewed_w = $most_viewed_w->fetchAll(PDO::FETCH_ASSOC);
+    $honor_find = array_search($video['vid'], array_column($most_viewed_w, 'vid'));
+    unset($most_viewed_w);
+    if ($honor_find !== false) {
+        $where_it_is = $honor_find + 1;
+        $video_honors[] = ["honor" => "#" . $where_it_is . " - Most Viewed (This Week)", "url" => "s=mp&t=w&page=1"];
+        }
+    }
+    /* Honors: Most Viewed (This Month) */
+    $most_viewed_m = $conn->query(
+    "SELECT * FROM views
+    LEFT JOIN videos ON videos.vid = views.vid
+    WHERE (videos.converted = 1 AND videos.privacy = 1) AND videos.uploaded > DATE_SUB(NOW(), INTERVAL 1 MONTH) GROUP BY views.vid
+    ORDER BY COUNT(views.view_id) DESC LIMIT 35"
+    );
+
+    if ($most_viewed_m) {
+    $most_viewed_m = $most_viewed_m->fetchAll(PDO::FETCH_ASSOC);
+    $honor_find = array_search($video['vid'], array_column($most_viewed_m, 'vid'));
+    unset($most_viewed_m);
+    if ($honor_find !== false) {
+        $where_it_is = $honor_find + 1;
+        $video_honors[] = ["honor" => "#" . $where_it_is . " - Most Viewed (This Month)", "url" => "s=mp&t=m&page=1"];
+        }
+    }
+    /* Honors: Most Viewed (All Time) */
+    $most_viewed = $conn->query(
+    "SELECT * FROM views
+    LEFT JOIN videos ON videos.vid = views.vid
+    WHERE (videos.converted = 1 AND videos.privacy = 1) GROUP BY views.vid
+    ORDER BY COUNT(views.view_id) DESC LIMIT 35"
+    );
+
+    if ($most_viewed) {
+    $most_viewed = $most_viewed->fetchAll(PDO::FETCH_ASSOC);
+    $honor_find = array_search($video['vid'], array_column($most_viewed, 'vid'));
+    unset($most_viewed);
+    if ($honor_find !== false) {
+        $where_it_is = $honor_find + 1;
+        $video_honors[] = ["honor" => "#" . $where_it_is . " - Most Viewed (All Time)", "url" => "s=mp&t=a&page=1"];
+        }
+    }

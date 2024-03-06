@@ -1,0 +1,49 @@
+RewriteEngine On
+
+# Redirect requests for /user/profilename to /profile.php?user=profilename
+RewriteRule ^user/([^/]*)$ /profile.php?user=$1 [L,R=301]
+
+# Redirect requests for /videos/profilename to /profile_videos.php?user=profilename
+RewriteRule ^videos/([^/]*)$ /profile_videos.php?user=$1 [L,R=301]
+
+# Redirect requests for /tags/search to /results.php?search=search
+RewriteRule ^tags/([^/]*)$ /results.php?search=$1 [L,R=301]
+
+# Redirect requests for /user/profilename/menu to /profile_menu.php?user=profilename
+RewriteRule ^user/([^/]+)/(videos|favorites)$ /profile_$2.php?user=$1 [L,R=301]
+
+# fix query string
+RewriteCond %{QUERY_STRING} "(.*)"
+RewriteRule ^v/([^/]*)\.swf$ /watch_video.php?v=$1&%1 [L,R=302]
+
+# Proper swf embed URLs
+RewriteRule ^v/([^/]*)\.swf$ /watch_video.php?v=$1 [L,R=302]
+
+# fix query string
+RewriteCond %{QUERY_STRING} "(.*)"
+RewriteRule ^v/([^/]*)$ /em.php?v=$1&%1 [NC,END]
+
+# Proper embed URLs
+RewriteRule ^v/([^/]*)$ /em.php?v=$1 [NC,END]
+
+# Redirect RSS requests to API
+RewriteRule ^rss/([^/]*)$ api/rss$1 [NC,END]
+
+# Redirect /developers requests to API
+RewriteRule ^developers\.*p*h*p*$ /api/dev.php [NC,END]
+
+# Redirect swf_show requests to myclips.swf
+RewriteRule ^swf_show/([^/]*)$ /myclips.swf?u=$1 [L,R=301]
+
+# Rewrite view_id my_messages requests to read_msg
+RewriteCond %{QUERY_STRING} "view_id=(.*)"
+RewriteRule ^my_messages\.*p*h*p*$ /read_msg.php?id=%1 [NC,END]
+
+# Add .php extension to URLs that do not have one
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [NC]
+RewriteRule ^(.+)\.php[^/]*$ $1.php [NC,END]
+
+ErrorDocument 404 /errors/404.html
+ErrorDocument 500 /error.html

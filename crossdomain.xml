@@ -1,0 +1,4 @@
+<!-- http://www.kamtape.com/crossdomain.xml -->
+<cross-domain-policy>
+<allow-access-from domain="*" secure="false"/>
+</cross-domain-policy>
