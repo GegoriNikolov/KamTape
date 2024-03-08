@@ -1,3 +1,5 @@
+# leaked by aesthetiful
+fuck you jr and all of the kamtape community, i am tired of supporting this shit site that is down 24/7. join [EraCast](https://www.eracast.cc/) my site is actually better
 # KamTape.com
 A near 1:1 evolving recreation of YouTube from 2005 from all of the Flickr photos, videos, tutorials, and books I could gather. Hosted at kamtape.com.
 ## Requirements
